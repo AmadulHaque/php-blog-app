@@ -2,8 +2,8 @@
 
 use App\Controllers\HomeController;
 
+use App\Facades\Router;
 
 
-
-$router->get('/', [HomeController::class, 'index']);
-$router->get('/admin', [HomeController::class, 'admin']);
+Router::get('/', [HomeController::class, 'index']); // implement route name like ->nmae('home')
+Router::get('/admin', [HomeController::class, 'admin']);

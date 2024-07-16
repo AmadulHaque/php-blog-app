@@ -57,6 +57,19 @@ if (!function_exists('response')) {
     }
 }
 
+if (!function_exists('base_path')) {
+    /**
+     * Get the base path of the application.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function base_path($path = '')
+    {
+        return __DIR__ . '/../../' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
+    }
+}
+
 
 // if(!function_exists('route')){
 //     function route($name)
