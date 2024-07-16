@@ -7,7 +7,9 @@
 </head>
 <body>
 
+
     hello php blog app <a href="/admin">Got to Admin </a>
 
+    
 </body>
 </html>

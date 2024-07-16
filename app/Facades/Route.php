@@ -4,7 +4,7 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Router extends Facade
+class Route extends Facade
 {
     protected static function getFacadeAccessor()
     {

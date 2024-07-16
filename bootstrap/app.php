@@ -2,8 +2,8 @@
 
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Http\Request;
 
 $container = new Container();
 
@@ -21,8 +21,12 @@ $dispatcher = new Dispatcher($container);
 $container->instance('events', $dispatcher);
 
 // Register the router
-$router = new Router($dispatcher, $container);
+$router = new \App\Core\Router($dispatcher, $container);
 $container->instance('router', $router);
+
+// Register the custom Request class
+$request = Request::capture();
+$container->instance('request', $request); // Register as 'request'
 
 // Register service providers
 foreach ($config['providers'] as $provider) {

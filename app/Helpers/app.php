@@ -5,7 +5,9 @@ if (!function_exists('view')) {
     function view(string $view, array $data = [])
     {
         extract($data);
-        require __DIR__ . "/../../views/{$view}.php";    
+        ob_start();
+        require __DIR__ . "/../../views/{$view}.php";   
+        return ob_get_clean(); 
     }
 }
 

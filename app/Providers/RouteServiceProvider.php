@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Routing\Router;
+use App\Core\Router; 
 
 if (!function_exists('base_path')) {
     function base_path($path = '') {
