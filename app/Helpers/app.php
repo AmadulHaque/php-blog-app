@@ -71,15 +71,13 @@ if (!function_exists('base_path')) {
 }
 
 
-// if(!function_exists('route')){
-//     function route($name)
-//     {
-//         global $router;
-//         $route = $router->name($name);
-//         if ($route) {
-//             return $route;
-//         } else {
-//             throw new Exception("Route '{$name}' not found.");
-//         }
-//     }
-// }
+
+
+if (!function_exists('abrot')) {
+    function abrot(string $view)
+    {
+    
+        require __DIR__ . "/../../views/errors/{$view}.php";    
+       
+    }
+}

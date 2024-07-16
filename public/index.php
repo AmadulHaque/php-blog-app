@@ -13,6 +13,14 @@ session_start();
 $request = Request::capture();
 $router = $container->make('router');
 
-$response = $router->dispatch($request);
-
-$response->send();
+try {
+    $response = $router->dispatch($request);
+    $response->send();
+} catch (HttpException $e) {
+    // Handle HTTP exceptions
+    http_response_code($e->getStatusCode());
+    echo $e->getMessage();
+} catch (\Exception $e) {
+    http_response_code(404);
+    abrot(404);
+}

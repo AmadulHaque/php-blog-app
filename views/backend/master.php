@@ -6,6 +6,5 @@
     <title>Document</title>
 </head>
 <body>
-        blog admin
-</body>
+    hello php blog app <a href="/">Got to Home </a>
 </html>
