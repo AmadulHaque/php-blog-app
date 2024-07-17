@@ -43,7 +43,7 @@ php-blog-app/
 │
 │
 ├── database/
-│       └──  implement database schema create and migrate command and reloation ORM database connect use pdo
+│       └──  implement database sql schema create and migrate command and reloation ORM database connect use pdo
 │       
 │       
 ├── routes/

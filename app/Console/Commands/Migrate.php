@@ -2,58 +2,54 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
+use App\Core\Database;
 
-class Migrate {
-    public function handle()
-    {
+class Migrate  {
+    public function handle($arguments) {
         try {
+            $database = new Database();
+            $pdo = $database->getConnection();
             $migrationFiles = glob(__DIR__ . '/../../../database/migrations/*.php');
 
             foreach ($migrationFiles as $file) {
                 require_once $file;
 
-
                 $className = $this->getClassNameFromFile($file);
 
-             
-
-                if ($className) {
-                    // Instantiate the migration class
-                    $migration = new $className();
-
-                    // Ensure it's an instance of Laravel's Migration class
-                    if (!($migration instanceof \Illuminate\Database\Migrations\Migration)) {
-                        throw new \Exception("Invalid migration class: {$className}. It must implement Illuminate\Database\Migrations\Migration interface.");
-                    }
-
-
-                    // Run the migration
-                    $migration->up();
-
-
-                    echo "Migrated: {$className}\n";
+                if ($className === null) {
+                    echo "Class not found in file: {$file}\n";
+                    continue;
                 }
 
+                $migration = new $className($pdo);
+
+                if (method_exists($migration, 'up')) {
+                    $table = strtolower($className);
+                    if (!$this->tableExists($pdo, $table)) {
+                        $migration->up();
+                        echo "Migrated: {$className}\n";
+                        echo "All migrations successfully applied.\n";
+                    } else {
+                        $migration->up();
+                        echo "Table '{$table}' already exists. Skipping migration: {$className}\n";
+                    }
+                } else {
+                    echo "Method 'up' does not exist in {$className}\n";
+                }
             }
 
-            echo "All migrations successfully applied.\n";
         } catch (\Exception $e) {
             echo "Migration failed: " . $e->getMessage() . "\n";
         }
     }
 
-
-
-
-       /**
+    /**
      * Extracts the class name from a PHP file.
      *
      * @param string $file The file path
      * @return string|null The class name or null if not found
      */
-    private function getClassNameFromFile($file)
-    {
+    private function getClassNameFromFile($file) {
         $content = file_get_contents($file);
         $namespace = '';
         $className = '';
@@ -78,6 +74,19 @@ class Migrate {
         return null;
     }
 
-
+    /**
+     * Checks if a table exists in the database.
+     *
+     * @param \PDO $pdo The PDO instance
+     * @param string $table The table name
+     * @return bool True if the table exists, false otherwise
+     */
+    private function tableExists($pdo, $table) {
+        try {
+            $result = $pdo->query("SELECT 1 FROM {$table} LIMIT 1");
+            return $result !== false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
-

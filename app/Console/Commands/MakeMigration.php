@@ -2,8 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Core\Database;
+
 class MakeMigration {
+
     public function handle($args) {
+
+        $database = new Database();
+        $pdo = $database->getConnection();
+
         $migrationName = $args[0] ?? null;
 
         if (!$migrationName) {
@@ -11,9 +18,8 @@ class MakeMigration {
             return;
         }
 
-        $timestamp = date('Y_m_d_His');
-        $className = $this->convertToClassName($migrationName);
-        $fileName = "{$timestamp}_{$migrationName}.php";
+        $className = ucfirst($migrationName);
+        $fileName = date('Y_m_d_His') . "_{$migrationName}.php";
         $directoryPath = __DIR__ . "/../../../database/migrations";
         $filePath = "{$directoryPath}/{$fileName}";
 
@@ -25,8 +31,13 @@ class MakeMigration {
             }
         }
 
-        $stubPath = __DIR__ . '/stubs/migration.stub';
+        if (!$this->tableExists($pdo, $migrationName)) {
+            $stubPath = __DIR__ . '/stubs/migration.stub'; 
+        } else {
+            $stubPath = __DIR__ . '/stubs/migration_alert.stub';
+        }
 
+       
         if (!file_exists($stubPath)) {
             echo "Stub file does not exist: {$stubPath}\n";
             return;
@@ -41,11 +52,11 @@ class MakeMigration {
 
         $migrationContent = str_replace(
             ['{{className}}', '{{tableName}}'],
-            [$className, $this->convertToTableName($migrationName)],
+            [$className, $migrationName],
             $stubContent
         );
 
-        if (file_put_contents($filePath, $migrationContent) === true) {
+        if (file_put_contents($filePath, $migrationContent) === false) {
             echo "Failed to write migration file: {$filePath}\n";
             return;
         }
@@ -53,11 +64,24 @@ class MakeMigration {
         echo "Migration {$fileName} created successfully.\n";
     }
 
-    protected function convertToClassName($migrationName) {
-        return 'Create' . str_replace(' ', '', ucwords(str_replace('_', ' ', $migrationName))) . 'Table';
-    }
 
-    protected function convertToTableName($migrationName) {
-        return strtolower(str_replace(' ', '_', $migrationName));
+
+    /**
+     * Checks if a table exists in the database.
+     *
+     * @param \PDO $pdo The PDO instance
+     * @param string $table The table name
+     * @return bool True if the table exists, false otherwise
+     */
+    private function tableExists($pdo, $table) {
+        try {
+            $result = $pdo->query("SELECT 1 FROM {$table} LIMIT 1");
+            return $result !== false;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
+
+
+// implemment if table exits than  ALTER TABLE {{$tableName}}  else CREATE TABLE {{$tableName}} 

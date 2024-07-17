@@ -1,0 +1,16 @@
+<?php
+
+
+use App\Core\Migration;
+
+class {{className}} extends Migration {
+    public function up() {
+        $sql = "ALTER  TABLE {{tableName}}  ADD COLUMN new_column_name DATATYPE DEFAULT NULL ";
+        $this->pdo->exec($sql);
+    }
+
+    public function down() {
+        $sql = "ALTER TABLE {{tableName}}  DROP COLUMN new_column_name";
+        $this->pdo->exec($sql);
+    }
+}

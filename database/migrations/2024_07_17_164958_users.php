@@ -3,9 +3,9 @@
 
 use App\Core\Migration;
 
-class {{className}} extends Migration {
+class Users extends Migration {
     public function up() {
-        $sql = "CREATE TABLE {{tableName}} (
+        $sql = "CREATE TABLE users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )";
@@ -13,7 +13,7 @@ class {{className}} extends Migration {
     }
 
     public function down() {
-        $sql = "DROP TABLE IF EXISTS {{tableName}}";
+        $sql = "DROP TABLE IF EXISTS users";
         $this->pdo->exec($sql);
     }
 }
