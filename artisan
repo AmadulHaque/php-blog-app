@@ -5,9 +5,9 @@ define('APP_START', microtime(true));
 
 
 require 'vendor/autoload.php';
-require 'app/Core/Console.php';
+require 'app/Console/Console.php';
 
-use App\Core\Console;
+use App\Console\Console;
 
 $console = new Console();
 $console->run($argv);

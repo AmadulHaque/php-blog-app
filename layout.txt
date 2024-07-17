@@ -1,0 +1,64 @@
+Row php and OOP
+php-blog-app/
+│
+├── app/
+│   ├── controllers/
+│   │   └── UserController.php
+│   ├── Console/   
+│   │  └── Command/ 
+│   │      └──MakeController.php
+│   │      └──Migrate.php
+│   │      └──Serve.php
+│   ├── Core/
+│   │  └──console.php
+│   │  └──Request.php
+│   │  └──Response.php
+│   │  └──Router.php
+│   │  └──Route.php
+│   │  └──Database.php
+│   │
+│   ├── models/
+│   │   └── implement model  create  command and reloation ORM and Query opration 
+│   │
+│   ├── Providers/
+│   │   └── RouteServiceProvider.php
+│   │
+├── views/
+│   ├── user/
+│       ├── index.php
+│       ├── show.php
+│       │   └── ...
+│       ├── layout/
+│       ├── header.php
+│       └── footer.php
+│   
+│   
+├── bootstrap/
+│       └── app.php
+│       
+├── config/
+│       └── app.php
+│       └── database.php
+│       └── ...
+│
+│
+├── database/
+│       └──  implement database schema create and migrate command and reloation ORM database connect use pdo
+│       
+│       
+├── routes/
+│       └── app.php
+│       └── ...
+│
+├── public/
+│   ├── index.php
+│   ├── css/
+│   ├── js/
+│   └── ...
+│
+└── vendor/
+│   ├── autoload.php
+│   └── ...
+│
+├── .env
+

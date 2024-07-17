@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Controllers;
+
+class {{controllerName}} {
+    public function index() {
+        echo 'This is the {{controllerName}} controller index method.';
+    }
+}

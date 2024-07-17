@@ -13,10 +13,11 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^5.6",
-        "illuminate/http": "^10.48",
-        "illuminate/events": "^10.48",
-        "illuminate/container": "^10.48",
-        "illuminate/routing": "v10.48.16"
+        "vlucas/phpdotenv": "^5.0",
+        "illuminate/http": "^11.0",
+        "illuminate/events": "^11.0",
+        "illuminate/container": "^11.0",
+        "illuminate/routing": "^11.0",
+        "illuminate/database": "^11.16"
     }
 }

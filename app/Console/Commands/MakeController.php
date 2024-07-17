@@ -19,19 +19,16 @@ class MakeController {
             mkdir($directoryPath, 0777, true);
         }
 
-        $controllerTemplate = "<?php
+        $stubPath = __DIR__ . '/stubs/controller.stub';
+        $stubContent = file_get_contents($stubPath);
 
-namespace App\Controllers\\" . str_replace('/', '\\', $controllerName) . ";
+        $controllerContent = str_replace(
+            '{{controllerName}}',
+            basename($controllerName),
+            $stubContent
+        );
 
-class " . basename($controllerName) . " {
-    public function index() {
-        echo 'This is the " . basename($controllerName) . " controller index method.';
-    }
-}
-";
-
-        file_put_contents($controllerPath, $controllerTemplate);
+        file_put_contents($controllerPath, $controllerContent);
         echo "Controller {$controllerName} created successfully.\n";
     }
 }
-?>
