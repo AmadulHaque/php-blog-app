@@ -39,4 +39,13 @@ class Database {
     public function getConnection() {
         return $this->pdo;
     }
+
+
+    public  function query($sql, $params = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

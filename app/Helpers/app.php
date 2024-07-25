@@ -6,8 +6,20 @@ if (!function_exists('view')) {
     {
         extract($data);
         ob_start();
-        require __DIR__ . "/../../views/{$view}.php";   
-        return ob_get_clean(); 
+
+        // require __DIR__ . "/../../views/{$view}.php";   
+        
+        $file = __DIR__ . "/../../views/{$view}.php";
+        $content = file_get_contents($file);
+
+        // Custom @php directive parsing
+        $content = preg_replace('/@php(.*?)@endphp/s', '<?php $1 ?>', $content);
+
+        eval('?>' . $content);
+        return ob_get_clean();
+
+
+        
     }
 }
 
@@ -73,7 +85,18 @@ if (!function_exists('base_path')) {
 }
 
 
-
+if (! function_exists('asset_path')) {
+    /**
+     * Generate an asset path for the application and secure cache.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function asset_path($path)
+    {
+        return config('url').'/'.$path;  
+    }
+}
 
 if (!function_exists('abrot')) {
     function abrot(string $view)
@@ -83,3 +106,17 @@ if (!function_exists('abrot')) {
        
     }
 }
+
+
+if (!function_exists('config')) {
+    function config($key)
+    {
+        $config = require __DIR__ . '/../../config/app.php';
+          
+       return $config[$key];
+    }
+}
+
+
+
+

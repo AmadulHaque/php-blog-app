@@ -12,7 +12,9 @@ class MakeMigration {
         $pdo = $database->getConnection();
 
         $migrationName = $args[0] ?? null;
-
+        $migrationTable = $args[1] ?? null;
+        $existsTable = $migrationTable ?  str_replace('--table=','',$migrationTable) : '';
+         
         if (!$migrationName) {
             echo "Please provide a migration name.\n";
             return;
@@ -30,11 +32,11 @@ class MakeMigration {
                 return;
             }
         }
-
-        if (!$this->tableExists($pdo, $migrationName)) {
-            $stubPath = __DIR__ . '/stubs/migration.stub'; 
-        } else {
+        
+        if ($migrationTable && $this->tableExists($pdo, $existsTable)) {
             $stubPath = __DIR__ . '/stubs/migration_alert.stub';
+        }else{
+            $stubPath = __DIR__ . '/stubs/migration.stub'; 
         }
 
        
@@ -51,8 +53,8 @@ class MakeMigration {
         }
 
         $migrationContent = str_replace(
-            ['{{className}}', '{{tableName}}'],
-            [$className, $migrationName],
+            ['{{className}}', '{{tableName}}','{{migrationTable}}'],
+            [$className, $migrationName, $existsTable],
             $stubContent
         );
 
@@ -83,5 +85,3 @@ class MakeMigration {
     }
 }
 
-
-// implemment if table exits than  ALTER TABLE {{$tableName}}  else CREATE TABLE {{$tableName}} 

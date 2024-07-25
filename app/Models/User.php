@@ -2,9 +2,20 @@
 
 namespace App\Models;
 
-class User extends BaseModel
-{
-    protected $table = 'User';
+use App\Core\Model;
 
-    // Define your model's methods here
+class User extends Model
+{
+    protected $table = 'users';
+
+
+    public  function get()
+    {
+       $sql = "SELECT * FROM {$this->table};"; 
+       return $this->query($sql);
+    }
+
+
+
+    
 }

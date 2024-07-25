@@ -1,6 +1,5 @@
 <?php
 
-// index.php or wherever you bootstrap your application
 define('APP_START', microtime(true));
 
 require_once __DIR__ . '/../vendor/autoload.php';

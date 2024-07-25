@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController {
@@ -9,8 +10,8 @@ class HomeController {
 
     public function index(Request $request) 
     {
-
-        return view('app');
+        $users = (new User())->get();
+        return view('app',['users'=>$users]);
     }
 
     public function admin() 

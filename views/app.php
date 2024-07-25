@@ -7,9 +7,10 @@
 </head>
 <body>
 
+        @php
+            echo "test";
+        @endphp
 
-    hello php blog app <a href="/admin">Got to Admin </a>
-
-    
+     hello php blog app <a href="/admin">Got to Admin </a>
 </body>
 </html>
