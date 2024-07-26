@@ -10,6 +10,7 @@ class Console
         'make:migration'    => \App\Console\Commands\MakeMigration::class,
         'migrate'           => \App\Console\Commands\Migrate::class,
         'serve'             => \App\Console\Commands\Serve::class,
+        'db:seed'           => \App\Console\Commands\Seeder::class,
     ];
 
     public function run($argv)

@@ -18,6 +18,7 @@
         "illuminate/events": "^11.0",
         "illuminate/container": "^11.0",
         "illuminate/routing": "^11.0",
-        "illuminate/database": "^11.16"
+        "illuminate/database": "^11.16",
+        "fakerphp/faker": "^1.23"
     }
 }
