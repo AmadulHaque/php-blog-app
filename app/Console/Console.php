@@ -11,6 +11,7 @@ class Console
         'migrate'           => \App\Console\Commands\Migrate::class,
         'serve'             => \App\Console\Commands\Serve::class,
         'db:seed'           => \App\Console\Commands\Seeder::class,
+        'test'              => \App\Console\Commands\Test::class,
     ];
 
     public function run($argv)
